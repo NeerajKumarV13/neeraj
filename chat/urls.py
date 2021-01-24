@@ -4,5 +4,5 @@ from chat import views
 app_name = "chat"
 
 urlpatterns = [
-    url(r'^convo$',views.convo,name='convo'),
+    url(r'^$',views.convo,name='convo'),
 ]

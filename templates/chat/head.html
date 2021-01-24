@@ -1,0 +1,50 @@
+{% extends "chat/base.html" %} {% block body_block %}
+<div class="container">
+    <div class="jumbotron header" style="margin-top: 100px;">
+        <form method="POST">
+            {{ form.as_p }} {% csrf_token %}
+            <input type="submit" class="btn btn-primary" style="margin: 10px" id="load-button" value="Load">
+        </form>
+        <p>{{ error_text }}</p>
+    </div>
+</div>
+<script>
+    console.log("Hey");
+
+    header = document.querySelector(".header");
+
+    fromBox = document.querySelector("#from_box");
+    toBox = document.querySelector("#to_box");
+    loadButton = document.querySelector("#load-button");
+
+    function load() {
+        from = fromBox.value;
+        if (from === "") {
+            alert("Your username is required!");
+            return;
+        }
+        to = toBox.value;
+        if (to === "") {
+            alert("Reciever username is required!");
+            return;
+        }
+    }
+
+    loadButton.addEventListener('click', load);
+    fromBox.addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+            load();
+        }
+    });
+    toBox.addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+            load();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadButton.disabled = false;
+    });
+</script>
+
+{% endblock %}

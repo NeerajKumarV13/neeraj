@@ -1,5 +1,7 @@
+from django.http.response import HttpResponse
+from chat.models import Message
 from django.shortcuts import render
-
+from chat.forms import LinkForm
 # Create your views here.
 
 
@@ -9,19 +11,37 @@ def index(request):
 
 def convo(request):
     if request.method == 'POST':
-        chats = [
-            {
-                'from': 'Chaitanya:',
-                'message': 'Hey',
-            },
-            {
-                'from': 'Neeraj:',
-                'message': 'Hello',
-            },
-        ]
+        print(request.POST)
+        sender = request.POST['From']
+        reciever = request.POST['To']
 
-        return render(request, 'chat/base.html', context={
-            'chats': chats,
-        })
+        if 'messageText' in request.POST:
+            messageText = request.POST['messageText']
+            message = Message().setData(sender, reciever, messageText)
 
-    return render(request, 'chat/base.html')
+            message.save()
+
+            return HttpResponse(True)
+
+        else:
+            chats = [
+                {
+                    'from': sender+":",
+                    'message': 'Hey',
+                },
+                {
+                    'from': reciever+":",
+                    'message': 'Hello',
+                },
+            ]
+
+            return render(request, 'chat/chat.html', {
+                'from': sender,
+                'to': reciever,
+                'chats': chats,
+            })
+
+    form = LinkForm()
+    return render(request, 'chat/head.html', {
+        'form': form,
+    })
