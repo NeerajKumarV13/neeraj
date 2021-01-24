@@ -4,7 +4,7 @@ from django.shortcuts import render
 from chat.forms import LinkForm
 # Create your views here.
 
-
+#fuyghkunjlkm;,
 def index(request):
     return render(request, 'chat/index.html')
 
@@ -27,11 +27,11 @@ def convo(request):
             chats = [
                 {
                     'from': sender+":",
-                    'message': 'Hey',
+                    'message': 'Hey how are you?',
                 },
                 {
                     'from': reciever+":",
-                    'message': 'Hello',
+                    'message': 'Hello i am fine',
                 },
             ]
 
